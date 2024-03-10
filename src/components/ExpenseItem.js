@@ -3,6 +3,36 @@ import { AppContext } from '../context/AppContext';
 import { FaTimesCircle } from 'react-icons/fa';
 
 const ExpenseItem = (props) => {
+    // Accessing dispatch and Location from the global state using useContext hook
+    const { dispatch, Location } = useContext(AppContext);
+
+    // Function to handle deletion of an expense item
+    const handleDeleteItem = () => {
+        const item = {
+            name: props.name,
+        };
+        dispatch({
+            type: 'DELETE_ITEM',
+            payload: item,
+        });
+    };
+
+    return (
+        <tr>
+            <td>{props.name}</td>
+            <td>{props.quantity}</td>
+            <td>{Location}{parseInt(props.unitprice)}</td>
+            <td>{Location}{parseInt(props.quantity) * parseInt(props.unitprice)}</td>
+            <td>
+                {/* Render delete icon with onClick event to trigger handleDeleteItem function */}
+                <FaTimesCircle
+                    size='2.2em'
+                    color="red"
+                    onClick={handleDeleteItem}
+                />
+            </td>
+        </tr>
+    );
 };
 
 export default ExpenseItem;
